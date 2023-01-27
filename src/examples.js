@@ -18,14 +18,22 @@ const pet = {
   age: 0,
   isFriendly: true,
   name: "Benny",
+  makeSound: function () {
+    return "Oink";
+  },
 };
+
+function formatIsFriendly(isFriendly) {
+  return isFriendly ? "Yes" : "No";
+}
 
 const petDetail = document.querySelector("#js-pet-detail");
 petDetail.innerHTML = `
 <h4 style="color: ${pet.colour}">${pet.type}</h4>
 <p>Age: ${pet.age}</p>
-<p>Friendly: ${pet.isFriendly}</p>
+<p>Friendly: ${formatIsFriendly(pet.isFriendly)}</p>
 <p style="color: ${pet.colour}">Name: ${pet.name} </p>
+<p>Name: ${pet.name} makes this sound ${pet.makeSound()} </p>
 `;
 
 // HTML from array
@@ -53,11 +61,19 @@ const cars = [
 let html = "";
 
 for (let i = 0; i < cars.length; i++) {
-  html += `<div class="car">
-                    <h2>${cars[i].name}</h2>
-                    <p>Brand: ${cars[i].brand}</p>
-                    <p>Is Electric: ${cars[i.electric]}</p>
-              </div>`;
+  let colour = "green";
+
+  if (cars[i].soldOut === true) {
+    colour = "red";
+  }
+
+  html += `
+  <div class="car">
+    <h2 style="color: ${colour}">${cars[i].name}</h2>
+    <p>Brand: ${cars[i].brand}</p>
+    <p>Is Electric: ${cars[i].electric}</p>
+  </div>
+`;
 }
 
 document.querySelector("#cars").innerHTML = html;
@@ -98,3 +114,8 @@ function createPokemonHTMLList(pokemonList) {
 
 document.querySelector("#js-pokemon").innerHTML =
   createPokemonHTMLList(pokemon);
+
+document.querySelector("#makePokemon").addEventListener("click", function () {
+  document.querySelector("#js-pokemon").innerHTML =
+    createPokemonHTMLList(pokemon);
+});
